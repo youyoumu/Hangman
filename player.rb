@@ -1,4 +1,6 @@
 class Player
+  attr_accessor :the_letter
+
   def take_turn
     guess
     check_guess
@@ -23,6 +25,3 @@ class Player
     @the_letter.downcase!
   end
 end
-
-player = Player.new
-player.take_turn
