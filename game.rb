@@ -1,5 +1,6 @@
 require "./player.rb"
 require "./computer.rb"
+require 'json'
 
 class Game
 
@@ -11,9 +12,10 @@ class Game
   def play
     show_hint
     puts @computer.the_word
-    until check_winner
+    until check_winner || @player.want_to_save
       @player.take_turn
-      until check_incorrect_letter_dupe(@player.the_letter)
+      break if @player.want_to_save
+      until check_incorrect_letter_dupe(@player.the_letter) || @player.want_to_save
         puts "That letter has been marked to be incorrect. Try Again!"
         @player.take_turn
       end
@@ -21,6 +23,17 @@ class Game
       show_hint
       puts "#{@computer.counter} turns left!"
     end
+    save_game if @player.want_to_save
+  end
+
+  def save_game
+    data = {
+      hint: @computer.hint,
+      the_word: @computer.the_word,
+      counter: @computer.counter
+    }
+    File.write('save_data.json', data.to_json)
+    puts "Data has been saved!"
   end
 
   def check_incorrect_letter_dupe(the_letter)
