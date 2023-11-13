@@ -48,7 +48,7 @@ class Game
       return true
     end
     if @computer.counter == 0
-      puts "Computer Wins! the Word is #{@computer.the_word}"
+      puts "Computer Wins! the Word is '#{@computer.the_word}'"
       return true
     end
     return false

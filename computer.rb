@@ -1,5 +1,5 @@
 class Computer
-  attr_accessor :the_word, :counter, :hint, :incorrect_letter
+  attr_accessor :the_word, :counter, :hint, :incorrect_letter, :correct_letter
 
   def initialize
     data = File.read("./google-10000-english-no-swears.txt").split("\n")
@@ -13,6 +13,7 @@ class Computer
     end
     @counter = 6
     @incorrect_letter = []
+    @correct_letter = []
   end
 
   def show_hint
@@ -20,15 +21,16 @@ class Computer
     puts "Incorrect letter: #{@incorrect_letter}"
   end
 
-  def update_hint(the_word)
+  def update_hint(the_letter)
     is_incorrect = true
     @hint.each_with_index do |hint, hint_index|
-      if @the_word[hint_index] == the_word
-        @hint[hint_index] = the_word
+      if @the_word[hint_index] == the_letter
+        @hint[hint_index] = the_letter
+        @correct_letter.push(the_letter)
         is_incorrect = false
       end
     end
-    @incorrect_letter.push(the_word) if is_incorrect
+    @incorrect_letter.push(the_letter) if is_incorrect
     count if is_incorrect
   end
 
