@@ -11,7 +11,7 @@ class Game
 
   def play
     show_hint
-    puts "#{@computer.counter} turns left!"
+    puts "#{@computer.counter} incorrect turns left!"
     until check_winner || @player.want_to_save
       @player.take_turn
       break if @player.want_to_save
@@ -21,7 +21,7 @@ class Game
       end
       @computer.update_hint(@player.the_letter)
       show_hint
-      puts "#{@computer.counter} turns left!"
+      puts "#{@computer.counter} incorrect turns left!"
     end
     save_game if @player.want_to_save
   end
@@ -48,7 +48,7 @@ class Game
       return true
     end
     if @computer.counter == 0
-      puts "Computer Wins!"
+      puts "Computer Wins! the Word is #{@computer.the_word}"
       return true
     end
     return false

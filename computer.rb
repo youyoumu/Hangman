@@ -21,7 +21,6 @@ class Computer
   end
 
   def update_hint(the_word)
-    count
     is_incorrect = true
     @hint.each_with_index do |hint, hint_index|
       if @the_word[hint_index] == the_word
@@ -30,6 +29,7 @@ class Computer
       end
     end
     @incorrect_letter.push(the_word) if is_incorrect
+    count if is_incorrect
   end
 
   def count
