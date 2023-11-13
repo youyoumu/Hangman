@@ -11,7 +11,7 @@ class Game
 
   def play
     show_hint
-    puts @computer.the_word
+    puts "#{@computer.counter} turns left!"
     until check_winner || @player.want_to_save
       @player.take_turn
       break if @player.want_to_save
@@ -30,7 +30,8 @@ class Game
     data = {
       hint: @computer.hint,
       the_word: @computer.the_word,
-      counter: @computer.counter
+      counter: @computer.counter,
+      incorrect_letter: @computer.incorrect_letter
     }
     File.write('save_data.json', data.to_json)
     puts "Data has been saved!"
@@ -55,5 +56,14 @@ class Game
 
   def show_hint
     @computer.show_hint
+  end
+
+  def load
+    data = File.read('save_data.json')
+    data = JSON.parse(data)
+    @computer.hint = data["hint"]
+    @computer.the_word = data["the_word"]
+    @computer.counter = data["counter"]
+    @computer.incorrect_letter = data["incorrect_letter"]
   end
 end
