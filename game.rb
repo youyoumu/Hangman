@@ -13,10 +13,19 @@ class Game
     puts @computer.the_word
     until check_winner
       @player.take_turn
+      until check_incorrect_letter_dupe(@player.the_letter)
+        puts "That letter has been marked to be incorrect. Try Again!"
+        @player.take_turn
+      end
       @computer.update_hint(@player.the_letter)
       show_hint
       puts "#{@computer.counter} turns left!"
     end
+  end
+
+  def check_incorrect_letter_dupe(the_letter)
+    return false if @computer.incorrect_letter.include?(the_letter)
+    return true
   end
 
   def check_winner
